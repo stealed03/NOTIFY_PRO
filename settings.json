@@ -1,0 +1,46 @@
+{
+  "bot": {
+    "welcomeMessage": "👋 Welcome to *Telegram Monitor Bot*!\n\nThis bot silently monitors your Telegram account and sends you real-time alerts for:\n• 📩 Private messages\n• 🔔 Mentions & tags\n• 💬 Replies to your messages\n\nTap *Login Account* to get started.",
+    "footerText": "Powered by Telegram Monitor SaaS",
+    "supportUsername": "@support",
+    "contactInfo": "Contact us at @support for help.",
+    "brandName": "Telegram Monitor"
+  },
+  "features": {
+    "forceJoin": false,
+    "bioVerification": false,
+    "adminWhatsappMode": true,
+    "personalWhatsappMode": true,
+    "maintenanceMode": false,
+    "registrationOpen": true
+  },
+  "bioVerification": {
+    "requiredText": "@YourBotUsername",
+    "whitelistedUsers": [],
+    "premiumBypass": true,
+    "recheckIntervalHours": 12
+  },
+  "forceJoin": {
+    "channels": [],
+    "requiredAll": true
+  },
+  "alerts": {
+    "templates": {
+      "privateMessage": "📩 *New Private Message*\n\n👤 From: {sender}\n💬 Message: {message}\n🕐 Time: {time}\n\n[Open Chat]({chatLink})",
+      "mention": "🔔 *You Were Mentioned*\n\n👥 Group: {groupName}\n👤 By: {sender}\n💬 Message: {message}\n🕐 Time: {time}",
+      "reply": "💬 *New Reply to Your Message*\n\n👥 Chat: {chatName}\n👤 From: {sender}\n💬 Reply: {message}\n🕐 Time: {time}"
+    },
+    "rateLimit": {
+      "maxPerMinute": 10,
+      "maxPerHour": 100
+    }
+  },
+  "broadcast": {
+    "delayBetweenMessages": 100,
+    "maxRetries": 3
+  },
+  "premium": {
+    "enabled": false,
+    "features": ["personalWhatsapp", "bioBypass", "priorityAlerts"]
+  }
+}
