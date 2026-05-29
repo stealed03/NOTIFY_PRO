@@ -1,7 +1,8 @@
 FROM node:20-alpine
 
-# Install required system deps (for Baileys/sharp)
+# Install required system deps
 RUN apk add --no-cache \
+    git \
     python3 \
     make \
     g++ \
@@ -13,19 +14,28 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-# Copy package files first (layer caching)
+# Copy package files
 COPY package*.json ./
+
 RUN npm install --production
 
 # Copy source
 COPY . .
 
-# Create data directories
-RUN mkdir -p data/users data/sessions data/whatsapp data/logs data/backups config
+# Create directories
+RUN mkdir -p \
+    data/users \
+    data/sessions \
+    data/whatsapp \
+    data/logs \
+    data/backups \
+    config
 
-# Non-root user for security
+# Non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
 RUN chown -R appuser:appgroup /app
+
 USER appuser
 
 EXPOSE 3000
