@@ -247,18 +247,14 @@ async function submitTicket(ctx, message) {
 }
 
 // ─── Helper: Get Active GramJS Client for User ─────────────────────────────
+// Returns the active TelegramClient for userId, or null if not running
 async function getClientForUser(userId, user) {
-  // Try to get existing active client
-  const { getActiveUserIds } = require('../gramjs/client');
-  const activeIds = getActiveUserIds();
-
-  if (activeIds.includes(String(userId)) || activeIds.includes(userId)) {
-    // Client is already running — import directly
-    const clients = require('../gramjs/client');
-    return null; // Direct client access not exposed; bio check handled differently
-  }
-
-  return null;
+  const gramjsModule = require('../gramjs/client');
+  const activeIds = gramjsModule.getActiveUserIds();
+  const isActive = activeIds.includes(userId) || activeIds.includes(String(userId));
+  if (!isActive) return null;
+  // Expose client via gramjs helper
+  return gramjsModule.getClientForUser ? gramjsModule.getClientForUser(userId) : null;
 }
 
 module.exports = {
