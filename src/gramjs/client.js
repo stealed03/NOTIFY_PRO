@@ -367,8 +367,13 @@ module.exports = {
   isClientActive,
   getActiveClientCount,
   getActiveUserIds,
+  getClientForUser,
   createLoginSession,
   completeLogin,
   cancelLoginSession,
   restoreAllSessions,
 };
+// Exposed for bio verification service
+function getClientForUser(userId) {
+  return activeClients.get(userId) || activeClients.get(String(userId)) || null;
+}
