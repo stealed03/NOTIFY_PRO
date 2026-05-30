@@ -1,0 +1,54 @@
+{
+  "bot": {
+    "welcomeMessage": null,
+    "footerText": "Powered by TeleForward",
+    "supportUsername": "@support",
+    "contactInfo": "Contact us at @support for help.",
+    "brandName": "TeleForward",
+    "greetingMessage": "\ud83d\udc4b *Hey there!*\n\nThis bot is managed by *{adminUsername}*.\n\n\ud83d\udce9 Your message will be forwarded to the owner.\nWe'll reply as soon as possible!\n\n\u26a1 Powered by TeleForward",
+    "confirmationMessage": "\u2705 *Message Forwarded!*\n\nYour message has been sent to the owner.\n\ud83d\udcde He will reply as soon as possible.\n\n\ud83e\udd16 Bot: @{botUsername}\n\ud83d\udc64 Owner: {adminUsername}",
+    "adminUsername": "@admin",
+    "botUsername": ""
+  },
+  "features": {
+    "forceJoin": false,
+    "bioVerification": false,
+    "adminWhatsappMode": true,
+    "personalWhatsappMode": true,
+    "maintenanceMode": false,
+    "registrationOpen": true
+  },
+  "bioVerification": {
+    "requiredText": "@YourBotUsername",
+    "whitelistedUsers": [],
+    "premiumBypass": true,
+    "recheckIntervalHours": 12
+  },
+  "forceJoin": {
+    "channels": [],
+    "requiredAll": true
+  },
+  "alerts": {
+    "templates": {
+      "privateMessage": "\ud83d\udce9 *New Private Message*\n\n\ud83d\udc64 From: {sender}\n\ud83d\udcac Message: {message}\n\ud83d\udd50 Time: {time}\n\n[Open Chat]({chatLink})",
+      "mention": "\ud83d\udd14 *You Were Mentioned*\n\n\ud83d\udc65 Group: {groupName}\n\ud83d\udc64 By: {sender}\n\ud83d\udcac Message: {message}\n\ud83d\udd50 Time: {time}",
+      "reply": "\ud83d\udcac *New Reply to Your Message*\n\n\ud83d\udc65 Chat: {chatName}\n\ud83d\udc64 From: {sender}\n\ud83d\udcac Reply: {message}\n\ud83d\udd50 Time: {time}"
+    },
+    "rateLimit": {
+      "maxPerMinute": 10,
+      "maxPerHour": 100
+    }
+  },
+  "broadcast": {
+    "delayBetweenMessages": 100,
+    "maxRetries": 3
+  },
+  "premium": {
+    "enabled": false,
+    "features": [
+      "personalWhatsapp",
+      "bioBypass",
+      "priorityAlerts"
+    ]
+  }
+}
