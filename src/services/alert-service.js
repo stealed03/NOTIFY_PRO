@@ -4,7 +4,6 @@
  * Includes rate limiting and queue system
  */
 
-const PQueue = require('p-queue').default || require('p-queue');
 const logger = require('../utils/logger');
 const storage = require('../utils/storage');
 const waManager = require('../whatsapp/manager');
@@ -12,8 +11,33 @@ const waManager = require('../whatsapp/manager');
 // Per-user rate limit tracking
 const rateLimitMap = new Map(); // userId → { count, resetTime }
 
-// Global send queue (prevents flooding)
-const sendQueue = new PQueue({ concurrency: 3, interval: 1000, intervalCap: 5 });
+// Lightweight async queue — replaces p-queue (ESM-only, incompatible with require())
+class SimpleQueue {
+  constructor({ concurrency = 3 } = {}) {
+    this._concurrency = concurrency;
+    this._running = 0;
+    this._queue = [];
+  }
+  add(fn) {
+    return new Promise((resolve, reject) => {
+      this._queue.push({ fn, resolve, reject });
+      this._run();
+    });
+  }
+  _run() {
+    while (this._running < this._concurrency && this._queue.length > 0) {
+      const { fn, resolve, reject } = this._queue.shift();
+      this._running++;
+      Promise.resolve().then(() => fn()).then(
+        (val) => { this._running--; resolve(val); this._run(); },
+        (err) => { this._running--; reject(err);  this._run(); }
+      );
+    }
+  }
+}
+
+// Global send queue (prevents flooding Telegram/WA APIs)
+const sendQueue = new SimpleQueue({ concurrency: 3 });
 
 // ─── Main Alert Handler ────────────────────────────────────────────────────
 async function sendAlert(bot, userId, alertType, alertData) {
